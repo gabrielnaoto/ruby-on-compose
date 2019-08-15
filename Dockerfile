@@ -15,10 +15,13 @@ RUN apk add --update \
     build-base \
     readline-dev \
     openssl-dev \
-    zlib-dev \
+    zlib-dev
+RUN apk add --virtual build-deps python3-dev musl-dev \
+    && apk add --no-cache mariadb-dev
 
 # Install docker-compose
 RUN pip install "docker-compose${COMPOSE_VERSION:+==}${COMPOSE_VERSION}"
+RUN pip install mysqlclient
 
 ENV PATH=/root/.rbenv/bin/:/root/.rbenv/shims:$PATH
 
