@@ -17,7 +17,8 @@ RUN apk add --update \
     openssl-dev \
     zlib-dev
 RUN apk add --virtual build-deps python3-dev musl-dev \
-    && apk add --no-cache mariadb-dev
+    && apk add --no-cache mariadb-dev \
+    postgresql-dev
 
 # Install docker-compose
 RUN pip install "docker-compose${COMPOSE_VERSION:+==}${COMPOSE_VERSION}"
