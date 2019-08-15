@@ -4,14 +4,26 @@ FROM docker:${DOCKER_VERSION}
 ARG COMPOSE_VERSION=
 ARG DOCKER_VERSION
 
+# Install dependencies
+RUN apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
+RUN apk add --update \
+    bash \
+    git \
+    wget \
+    curl \
+    vim \
+    build-base \
+    readline-dev \
+    openssl-dev \
+    zlib-dev \
+
 # Install docker-compose
-RUN apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make curl
 RUN pip install "docker-compose${COMPOSE_VERSION:+==}${COMPOSE_VERSION}"
+
+ENV PATH=/root/.rbenv/bin/:/root/.rbenv/shims:$PATH
 
 # Install rbenv
 RUN curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash
-# Install rbenv-docker to check installation
-RUN curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-doctor | bash
 
 # Install ruby 2.6.3
 RUN rbenv install 2.6.3
